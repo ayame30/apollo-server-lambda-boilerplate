@@ -25,6 +25,8 @@ This example have implemented with these features:
 ```
 npm install
 npm run migrate
+npm run seed
+
 sls offline
 ```
 
