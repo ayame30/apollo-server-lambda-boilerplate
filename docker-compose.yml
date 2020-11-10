@@ -1,0 +1,29 @@
+version: "3"
+services:
+  # serverless:
+  #   container_name: apollo-server-lambda-boilerplate
+  #   build: .
+  #   expose:
+  #     - 3000
+  #   ports:
+  #     - 3000:3000
+  #   restart: on-failure
+  #   volumes:
+  #     - .:/app
+  #   command: bash -c "npm install && sls offline"
+
+  postgres:
+    container_name: apollo-server-lambda-boilerplate-postgres
+    image: postgres:10.4
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: apollo-server-lambda-boilerplate
+
+volumes:
+  db-data:
+    driver: local

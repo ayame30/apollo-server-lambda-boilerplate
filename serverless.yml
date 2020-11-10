@@ -1,0 +1,47 @@
+service: apollo-server-lambda-boilerplate
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: eu-west-1
+  stage: ${opt:stage, 'dev'}
+  timeout: 180
+  environment:
+    DATABASE_URL: ${env:DATABASE_URL}
+    NODE_ENV: ${env:NODE_ENV}
+    MAIL_SENDER: ${env:MAIL_SENDER}
+    MAIL_HOST: ${env:MAIL_HOST}
+    MAIL_PORT: ${env:MAIL_PORT}
+    MAIL_USER: ${env:MAIL_USER}
+    MAIL_PASS: ${env:MAIL_PASS}
+    AWS_S3_REGION: ${env:AWS_S3_REGION}
+    AWS_S3_ACCESS_KEY_ID: ${env:AWS_S3_ACCESS_KEY_ID}
+    AWS_S3_SECRET_ACCESS_KEY: ${env:AWS_S3_SECRET_ACCESS_KEY}
+    AWS_S3_UGC_BUCKET: ${env:AWS_S3_UGC_BUCKET}
+    SENTRY_DSN: ${env:SENTRY_DSN}
+    VERSION: ${env:VERSION}
+plugins:
+  - serverless-offline
+  - serverless-webpack
+  - serverless-dotenv-plugin
+
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    includeModules: true
+  serverless-offline:
+    useChildProcesses: true
+
+
+functions:
+  graphql:
+    # this is formatted as <FILENAME>.<HANDLER>
+    handler: graphql.graphqlHandler
+    events:
+    - http:
+        path: graphql
+        method: post
+        cors: true
+    - http:
+        path: graphql
+        method: get
+        cors: true

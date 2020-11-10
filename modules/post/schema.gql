@@ -1,0 +1,51 @@
+extend type Query {
+  post(id: ID!): Post
+  posts(connectionArgs: PostConnectionQuery, userId: ID, keyword: String): PostConnection!
+}
+extend type Mutation {
+  createPost(input: CreatePostInput!): Post
+  updatePost(input: UpdatePostInput!): Post
+  deletePost(input: DeletePostInput!): Post
+}
+
+enum PostSortBy { id, title, content, userId }
+
+input PostConnectionQuery {
+  sortBy: PostSortBy
+  sortOrder: SortOrder
+  first: Int
+  offset: Int
+}
+
+input CreatePostInput {
+  title: String!
+  content: String
+  userId: ID!
+}
+
+input DeletePostInput {
+  id: ID!
+}
+
+input UpdatePostInput {
+  id: ID!
+  title: String!
+  content: String
+}
+
+type PostConnection {
+  nodes: [Post]
+  pageInfo: PageInfo!
+}
+
+
+type Post implements Node {
+  id: ID!
+  title: String
+  content: String
+  userId: ID!
+  user: User!
+  createdAt: DateTime
+  updatedAt: DateTime
+  deletedAt: DateTime
+}

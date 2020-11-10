@@ -1,0 +1,51 @@
+{
+  "name": "apollo-server-lambda-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "sls offline",
+    "seed": "npx sequelize-cli db:seed:all",
+    "seed:undo": "npx sequelize-cli db:seed:undo:all",
+    "migrate": "npx sequelize-cli db:migrate",
+    "migrate:undo": "npx sequelize-cli db:migrate:undo"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sentry/node": "^5.24.2",
+    "@sentry/tracing": "^5.24.2",
+    "amazon-s3-uri": "0.0.3",
+    "apollo-server-lambda": "^2.16.1",
+    "bcryptjs": "^2.4.3",
+    "dataloader": "^2.0.0",
+    "faker": "^5.1.0",
+    "graphql": "^15.0.0",
+    "graphql-iso-date": "^3.6.1",
+    "graphql-tag": "^2.11.0",
+    "lodash": "^4.17.20",
+    "mime-types": "^2.1.27",
+    "nodemailer": "^6.4.11",
+    "pg": "^8.3.3",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.3.4",
+    "uuid": "^8.3.0",
+    "webpack-node-externals": "^2.5.2"
+  },
+  "peerDependencies": {
+    "graphql": "^15.0.0"
+  },
+  "resolutions": {
+    "graphql": "^15.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^7.2.0",
+    "mocha-webpack": "^2.0.0-beta.0",
+    "sequelize-cli": "^6.2.0",
+    "serverless-dotenv-plugin": "^3.1.0",
+    "serverless-offline": "^6.7.0",
+    "serverless-webpack": "^5.3.3",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}

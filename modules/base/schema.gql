@@ -1,0 +1,66 @@
+scalar Date
+scalar DateTime
+scalar Upload
+
+type Query {
+  _: Boolean
+}
+
+type Mutation {
+  _: Boolean
+}
+
+type Subscription {
+  _: Boolean
+}
+
+
+enum SortOrder {
+  asc
+  desc
+}
+
+interface Node {
+  id: ID!
+}
+
+interface Deletable {
+  isDeleted: Boolean!
+}
+
+interface NodeEdge {
+  node: Node
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  totalCount: Int!
+}
+
+input ConnectionQuery {
+  first: Int
+  offset: Int
+}
+
+extend type Mutation {
+  singleUpload(file: Upload!): UploadedFile!
+  requestPresignedUploadUrl(input: RequestPresignedUploadUrlInput!): PresignedUploadUrl!
+}
+
+input RequestPresignedUploadUrlInput {
+  isPrivate: Boolean = false
+  filename: String!
+}
+type PresignedUploadUrl {
+  url: String!
+  path: String!
+  filetype: String!
+  destination: String!
+}
+type UploadedFile {
+  filename: String
+  mimetype: String
+  encoding: String
+  url: String!
+}

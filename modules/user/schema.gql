@@ -1,0 +1,74 @@
+extend type Query {
+  me: User
+  users(connectionArgs: ConnectionQuery, keyword: String): UserConnection!
+  user(id: ID!): User
+}
+extend type Mutation {
+  signin(input: SigninInput!): LoginPayload
+  signup(input: SignupInput!): LoginPayload
+  forgotPassword(input: ForgotPasswordInput!): Boolean
+  resetPassword(input: ResetPasswordInput!): LoginPayload
+  updateUser(input: UpdateUserInput!): User
+}
+
+enum UserType {
+  CLIENT
+  ADMIN
+}
+
+input SigninInput {
+  email: String!
+  password: String!
+}
+input ForgotPasswordInput {
+  email: String!
+  locale: String
+}
+input ResetPasswordInput {
+  email: String!
+  token: String!
+  password: String!
+}
+input SignupInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  tel: String
+  password: String!
+}
+
+input UpdateUserInput {
+  "User ID"
+  id: ID!
+  email: String
+  firstName: String
+  lastName: String
+  tel: String
+  password: String
+  # required when update password
+  oldPassword: String
+}
+
+type LoginPayload {
+  user: User
+  token: String
+}
+
+type UserConnection {
+  nodes: [User]
+  pageInfo: PageInfo!
+}
+
+
+type User {
+  id: ID!
+  email: String
+  firstName: String
+  lastName: String
+  name: String
+  tel: String
+  type: String
+  posts(connectionArgs: PostConnectionQuery, keyword: String): PostConnection!
+  createdAt: DateTime
+  updatedAt: DateTime
+}

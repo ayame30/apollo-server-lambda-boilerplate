@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+    - npm install serverless npm serverless-offline serverless-webpack -g
+  pre_build:
+    commands:
+    - NODE_ENV=development npm install
+  build:
+    commands:
+    - mkdir -p target
+    - npm run migrate
+    - export VERSION=$CODEBUILD_RESOLVED_SOURCE_VERSION
+    - serverless deploy --stage ${STAGE} -v
+    - |
+      curl ${SENTRY_RELEASE_WEBHOOK} \
+      -X POST \
+      -H 'Content-Type: application/json' \
+      -d '{"version": "'"$CODEBUILD_RESOLVED_SOURCE_VERSION"'","refs": [{"repository": "$REPO_NAME","commit":"'"$CODEBUILD_RESOLVED_SOURCE_VERSION"'"}]}'
+
+cache:
+  paths:
+    - 'node_modules/**/*'
