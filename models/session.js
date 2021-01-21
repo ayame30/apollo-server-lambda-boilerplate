@@ -53,7 +53,7 @@ export default (sequelize, DataTypes) => {
       await session.set('lastLoginAt', new Date()).save();
       return session.user;
     } catch(err) {
-      Sentry.captureException(ex);
+      Sentry.captureException(err);
       return null;
     }
   }
